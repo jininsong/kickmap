@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "728402215029",
+    "project_id": "kickmap",
+    "storage_bucket": "kickmap.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:728402215029:android:d3d62ef61aae63aa6cf83c",
+        "android_client_info": {
+          "package_name": "com.example.kickmap"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG3GIqIFor1u3xq2zOBUnSi9Ccqoobe7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
