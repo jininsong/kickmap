@@ -3,7 +3,12 @@ package com.example.kickmap;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -26,18 +31,46 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap googleMap;
+    private MediaPlayer mediaPlayer;
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+
+        // 소리와 진동을 위한 초기화
+        //mediaPlayer = MediaPlayer.create(this, R.raw.sound); // res/raw/sound.mp3 파일을 재생
+        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+
+        // 버튼 클릭 리스너 설정
+        Button buttonSoundVibrate = findViewById(R.id.button_sound_vibrate);
+        buttonSoundVibrate.setOnClickListener(v -> {
+            // 소리 재생
+            if (mediaPlayer != null) {
+                mediaPlayer.start();
+            }
+
+            // 진동 실행
+            if (vibrator != null && vibrator.hasVibrator()) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    VibrationEffect effect = VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE);
+                    vibrator.vibrate(effect);
+
+                } else {
+                    vibrator.vibrate(500); // 500 milliseconds
+                }
+            }
         });
     }
 
@@ -90,6 +123,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 }
                 return;
             }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 }

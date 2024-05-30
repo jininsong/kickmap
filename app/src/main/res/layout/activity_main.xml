@@ -46,11 +46,15 @@
             android:text="경로 검색" />
 
         <Button
-            android:id="@+id/button_to_third_activity"
-            android:layout_width="0dp"
+            android:id="@+id/button_sound_vibrate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="신고" />
+            android:text="신고"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
